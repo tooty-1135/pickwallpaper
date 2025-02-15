@@ -1,0 +1,94 @@
+<div id="settings_form" style="padding: 30px">
+    <h1 class="title is-3">設定</h1>
+    <h2 class="title is-4">系統設定</h2>
+    <div class="setting_item">
+        開機啟動
+        <div class="field has-addons">
+            <p class="control">
+                <button class="button is-success" setting="open_at_login_on">
+                    <span>開</span>
+                </button>
+            </p>
+            <p class="control">
+                <button class="button is-danger" setting="open_at_login_off">
+                    <span>關</span>
+                </button>
+            </p>
+        </div>
+        <!--        <label class="switch" setting="open_at_login">-->
+        <!--            <input type="checkbox">-->
+        <!--            <span class="switch-slider round"></span>-->
+        <!--        </label>-->
+    </div>
+    <style>
+        .title {
+            animation: 0.3s cubic-bezier(0, 1, .5, 1) 0s 1 slideInFromLeft;
+        }
+
+        #settings_form {
+            display: flex;
+            flex-direction: column;
+            animation: 0.5s cubic-bezier(0, 1, .5, 1) 0s 1 slideInFromLeft;
+        }
+
+        .setting_item {
+            display: flex;
+            gap: 10px;
+            font-size: 20px;
+            align-items: center;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 34px;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            border-radius: 50%;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .switch-slider {
+            background-color: #3850b7;
+        }
+
+        input:focus + .switch-slider {
+            box-shadow: 0 0 1px #3850b7;
+        }
+
+        input:checked + .switch-slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+    </style>
+</div>

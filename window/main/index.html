@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh" style="background-color: transparent">
+
+<head>
+    <meta charset="UTF-8">
+    <title appname></title>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+
+<body>
+<div id="windowbar">
+    <div class="dragbar">
+        <div class="text" style="font-size: 15px;" appname></div>
+        <div class="text" style="font-size: 12px;margin-left: 5px;color: gray;" appversion></div>
+    </div>
+    <div class="btns">
+        <div id="close" class="close hover_red btn">
+            <span class="material-symbols-outlined">close</span>
+        </div>
+        <div id="minisize" class="hover_gray btn">
+            <span class="material-symbols-outlined">minimize</span>
+        </div>
+    </div>
+    <style>
+        #windowbar {
+            grid-area: windowbar;
+            background-color: black;
+            display: flex;
+
+            animation: 0.5s cubic-bezier(0, 1, .5, 1) 0s 1 slideInFromTop;
+        }
+
+        #windowbar > .dragbar {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            padding-left: 10px;
+            width: 100%;
+            -webkit-app-region: drag;
+        }
+
+        #windowbar > .dragbar > .text {
+            color: white;
+        }
+
+        #windowbar > .btns {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            justify-content: end;
+            transition: 0.5s;
+        }
+
+        #windowbar > * > .btn {
+            color: gray;
+            width: 50px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .1s ease-in-out;
+        }
+
+        #windowbar > * > .hover_red:hover {
+            background-color: red;
+        }
+
+        #windowbar > * > .hover_gray:hover {
+            background-color: rgb(30, 30, 30);
+        }
+    </style>
+</div>
+<div id="main-area">
+    <nav class="navbar" role="navigation"
+         aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="" style="gap: 5px;">
+                <img src="../../icons/icon_black.png" alt="nav icon">
+                <strong appname></strong>
+            </a>
+        </div>
+
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-light is-link" action_type="to_wallpapers">
+                            本地桌布
+                        </a>
+                        <a class="button is-light" disabled>
+                            壁紙桌布
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-light is-link" title="設定" action_type="to_settings">
+                            <span class="material-symbols-outlined">settings</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="main-area">
+    </div>
+    <style>
+        #main-area > .main-area {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        #main-area > .main-area > .main-area {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+    </style>
+    <label id="video-progress" action_type="wallpaper_progress" style="line-height: 0;">
+        <input type="range" title="影片進度條" min="0" max="100" value="0" step="0.01" class="range-slider">
+        <style>
+            #video-progress > .range-slider {
+                height: 6px;
+                border-radius: 0;
+                z-index: 31;
+            }
+
+            #video-progress > .range-slider::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width:  6px;
+                height: 6px;
+                background: #00947e;
+                cursor: pointer;
+                border-radius: 0;
+            }
+        </style>
+    </label>
+    <nav class="navbar" role="navigation"
+         aria-label="main navigation">
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-light is-link" action_type="play_pause" title="播放/暫停">
+                            <span class="material-symbols-outlined">play_arrow</span>
+                        </a>
+                        <a class="button is-light is-link" title="下一個桌布" action_type="next_wallpaper">
+                            <span class="material-symbols-outlined">skip_next</span>
+                        </a>
+                        <a class="button is-light is-link" title="隨機撥放" action_type="shuffle_wallpaper">
+                            <span class="material-symbols-outlined">shuffle</span>
+                        </a>
+                        <a class="button is-light is-link" action_type="remove_wallpaper" title="停止桌布">
+                            <span class="material-symbols-outlined">block</span>
+                        </a>
+                        <a class="button is-light is-link" action_type="attach_detach" title="桌布互動">
+                            <span class="material-symbols-outlined">layers</span>
+                        </a>
+                        <div class="field has-addons" action_type="src">
+                            <div class="control">
+                                <input class="input" type="url" placeholder="src">
+                            </div>
+                            <div class="control">
+                                <a class="button is-info">
+                                    load
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item" action_type="volume" style="gap: 10px;">
+                    <a class="button is-light is-link" title="靜音">
+                        <span class="material-symbols-outlined">volume_up</span>
+                    </a>
+                    <input type="range" title="調整音量" min="0" max="1" value="1" step="0.01" class="range-slider">
+                    <style>
+                        .range-slider {
+                            -webkit-appearance: none;
+                            width: 100%;
+                            height: 10px;
+                            border-radius: 10000px;
+                            background: #00d1b2;
+                            outline: none;
+                            opacity: .7;
+                            -webkit-transition: .2s;
+                            transition: opacity .2s;
+                            cursor: pointer;
+                        }
+
+                        .range-slider:hover {
+                            opacity: .9;
+                        }
+
+                        .range-slider:active {
+                            opacity: 1;
+                        }
+
+                        .range-slider::-webkit-slider-thumb {
+                            -webkit-appearance: none;
+                            appearance: none;
+                            width: 15px;
+                            height: 15px;
+                            background: #00947e;
+                            cursor: pointer;
+                            border-radius: 50%;
+                        }
+
+                        .range-slider:disabled::-webkit-slider-thumb {
+                            cursor: not-allowed;
+                        }
+
+                        .range-slider::-moz-range-thumb {
+                            width: 15px;
+                            height: 15px;
+                            border-radius: 50%;
+                            cursor: pointer;
+                        }
+                    </style>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <style>
+        #main-area {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            grid-area: main-area;
+            overflow: hidden;
+        }
+
+        .navbar-start, .navbar-start .buttons > * {
+            animation: 0.5s cubic-bezier(0, 1, .5, 1) 0s 1 slideInFromLeft;
+        }
+
+        .navbar-end, .navbar-end .buttons > * {
+            animation: 0.5s cubic-bezier(0, 1, .5, 1) 0s 1 slideInFromRight;
+        }
+    </style>
+</div>
+<div id="popup_mask" style="display: none">
+</div>
+</body>
+<style>
+    #popup_mask {
+        position: absolute;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        z-index: 100000;
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    #popup_mask > .loading,
+    #popup_mask > .loading > div {
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    #popup_mask > .loading {
+        display: block;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        position: relative;
+        animation: rotate 1s linear infinite;
+    }
+
+    #popup_mask > .loading::before {
+        content: "";
+        box-sizing: border-box;
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 5px solid #000;
+        animation: rotate-loader 3s linear infinite;
+    }
+
+    #popup_mask > .loading-text {
+        padding-top: 20px;
+        font-size: 30px;
+        color: black;
+    }
+
+    @keyframes rotate {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes rotate-loader {
+        0% {
+            clip-path: polygon(50% 50%, 50% 0, 50% 0, 50% 0, 50% 0, 50% 0);
+        }
+        25% {
+            clip-path: polygon(50% 50%, 100% 0, 100% 0, 50% 0, 0 0, 0 0);
+        }
+        50% {
+            clip-path: polygon(50% 50%, 100% 50%, 100% 0, 50% 0, 0 0, 0 50%);
+        }
+        75% {
+            clip-path: polygon(50% 50%, 100% 0, 100% 0, 50% 0, 0 0, 0 0);
+        }
+        100% {
+            clip-path: polygon(50% 50%, 50% 0, 50% 0, 50% 0, 50% 0, 50% 0);
+        }
+    }
+</style>
+<style>
+    @keyframes scaleUp {
+        0% {
+            transform: scale(0)
+        }
+
+        100% {
+            transform: scale(1)
+        }
+    }
+
+    @keyframes slideInFromTopAndScaleUp {
+        0% {
+            transform: scale(0) translateY(-100%);
+        }
+
+        100% {
+            transform: scale(1) translateX(0);
+        }
+    }
+
+    @keyframes slideInFromLeft {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+
+    @keyframes slideInFromRight {
+        0% {
+            transform: translateX(100%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideInFromTop {
+        0% {
+            transform: translateY(-100%);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInFromBottom {
+        0% {
+            transform: translateY(100%);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInFromBottomAndBack {
+        0% {
+            transform: translateY(100%);
+        }
+
+        70% {
+            transform: translateY(-30%);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInFromTopAndBack {
+        0% {
+            transform: translateY(-100%);
+        }
+
+        80% {
+            transform: translateY(1%);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes opacityInOut {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes opacityIn {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes opacityOut {
+        0% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes scaleYDown {
+        0% {
+            transform: scaleY(1);
+        }
+
+        100% {
+            transform: scaleY(0);
+        }
+    }
+
+    @keyframes opacityInAndScaleUp {
+        0% {
+            scale: .8;
+            opacity: 0;
+        }
+
+        100% {
+            scale: 1;
+            opacity: 1;
+        }
+    }
+
+    @keyframes opacityOutAndScaleDown {
+        0% {
+            scale: 1;
+            opacity: 1;
+        }
+
+        100% {
+            scale: .8;
+            opacity: 0;
+        }
+    }
+
+    @keyframes opacityOutAndScaleDownAndTranslateYDown {
+        0% {
+            scale: 1;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        100% {
+            scale: .8;
+            opacity: 0;
+            transform: translateY(100%);
+        }
+    }
+
+    * {
+        animation: 0.5s cubic-bezier(0, 1, .5, 1) 0s 1 opacityIn;
+        transition: ease-in-out .5s;
+    }
+
+    .button:active {
+        transform: scale(.9);
+        transition: linear .2s;
+    }
+
+    body {
+        animation: 2s cubic-bezier(0,1,0,1) 0s 1 opacityInAndScaleUp;
+        transition: cubic-bezier(0,1,0,1) 2s;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 40px 1fr;
+        gap: 0 0;
+        grid-auto-flow: row;
+        grid-template-areas:
+      "windowbar windowbar windowbar"
+      "main-area main-area main-area";
+        margin: 0;
+        font-family: 'Microsoft JhengHei', '微軟正黑體', sans-serif;
+        user-select: none;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgb(255 255 255 / 10%);
+        border-radius: 10px;
+    }
+
+    body > * {
+        background-color: white;
+    }
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
+    *[disabled] {
+        cursor: not-allowed;
+    }
+
+    /* Customize the label (the container) */
+    .checkbox {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 15px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* Hide the browser's default checkbox */
+    .checkbox > input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    /* Create a custom checkbox */
+    .checkbox > .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #eee;
+        transition: .3s ease;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .checkbox:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .checkbox input:checked ~ .checkmark {
+        background-color: #485fc7;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkbox > .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+        box-sizing: content-box;
+    }
+
+    /* Show the checkmark when checked */
+    .checkbox input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .checkbox > .checkmark:after {
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+</style>
+
+</html>

@@ -1,0 +1,151 @@
+<form id="upload_form" style="padding: 30px">
+    <!--    <div class="box" id="preview_image" style="animation: 0.5s cubic-bezier(0, 1, .5, 1) 0s 1 slideInFromTopAndScaleUp; height: 200px; margin-bottom:0">-->
+    <!--        <img class="preview_image" preview_count="1" style="height: 100%" src="https://bulma.io/images/placeholders/640x360.png">-->
+    <!--        <img class="preview_image" preview_count="2" style="height: 100%" src="https://bulma.io/images/placeholders/640x360.png">-->
+    <!--        <img class="preview_image" preview_count="3" style="height: 100%" src="https://bulma.io/images/placeholders/640x360.png">-->
+    <!--        <img class="preview_image" preview_count="4" style="height: 100%" src="https://bulma.io/images/placeholders/640x360.png">-->
+    <!--        <img class="preview_image" preview_count="5" style="height: 100%" src="https://bulma.io/images/placeholders/640x360.png">-->
+    <!--        <img class="preview_image" preview_count="6" style="height: 100%" src="https://bulma.io/images/placeholders/640x360.png">-->
+    <!--        <img class="preview_image" preview_count="7" style="height: 100%" src="https://bulma.io/images/placeholders/640x360.png">-->
+    <!--        <img class="preview_image" preview_count="8" style="height: 100%" src="https://bulma.io/images/placeholders/640x360.png">-->
+    <!--        <style>-->
+    <!--            #preview_image {-->
+    <!--                display: flex;-->
+    <!--                gap: 10px;-->
+    <!--                overflow-x: scroll;-->
+    <!--            }-->
+    <!--        </style>-->
+    <!--    </div>-->
+    <h1 class="title" style="animation: 0.3s cubic-bezier(0, 1, .5, 1) 0s 1 slideInFromLeft;">創建本地桌布</h1>
+    <div class="file is-link" upload_item="file"
+         style="animation: 0.4s cubic-bezier(0, 1, .5, 1) 0s 1 slideInFromLeft;">
+        <label class="file-label">
+            <input class="file-input" type="file" accept="image/*, video/*, audio/*" required>
+            <span class="file-cta">
+                <span class="file-icon">
+                    <span class="material-symbols-outlined">upload_file</span>
+                </span>
+                <span class="file-label">
+                    選擇文件
+                </span>
+            </span>
+        </label>
+    </div>
+    <div class="file is-link" upload_item="file2"
+         style="animation: 0.4s cubic-bezier(0, 1, .5, 1) 0s 1 slideInFromLeft;">
+        <label class="file-label">
+            <input class="file-input" type="file" accept="image/*">
+            <span class="file-cta">
+                <span class="file-icon">
+                    <span class="material-symbols-outlined">upload_file</span>
+                </span>
+                <span class="file-label">
+                    選擇文件
+                </span>
+            </span>
+        </label>
+    </div>
+    <label>
+        <input class="input wallpaper-title" type="text" placeholder="標題" required>
+    </label>
+    <label>
+        <textarea class="textarea wallpaper-description" placeholder="介紹一下這張桌布"></textarea>
+    </label>
+    <div class="accordion">
+        <div class="accordion_item">
+            <a class="accordion_item_title">進階選項</a>
+            <div class="accordion_item_content">
+                <label class="checkbox" options_item="no_progress">沒有進度條
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox" options_item="mute">沒有聲音
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <div class="accordion_item">
+                    <a class="accordion_item_title">音樂效果</a>
+                    <div class="accordion_item_content">
+                        <label class="checkbox" options_item="snow">下雪效果
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkbox" options_item="vis_top">可視化(上)
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkbox" options_item="vis_bottom">可視化(下)
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkbox" options_item="background_scale">背景縮放
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr style="margin:0">
+    <button type="submit" class="button is-link save">儲存</button>
+    <style>
+        #upload_form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: 0.5s cubic-bezier(0, 1, .5, 1) 0s 1 slideInFromLeft;
+        }
+
+        .accordion {
+            width: 100%;
+        }
+
+        .accordion .accordion_item {
+            position: relative;
+        }
+
+        .accordion .accordion_item .accordion_item_content {
+            color: #6b97a4;
+            overflow-x: hidden;
+        }
+
+        .accordion .accordion_item_title {
+            width: 100%;
+            display: block;
+            cursor: pointer;
+            font-weight: 600;
+            line-height: 3;
+            font-size: 14px;
+            text-indent: 15px;
+            user-select: none;
+        }
+
+        .accordion .accordion_item_title:after {
+            width: 8px;
+            height: 8px;
+            border-right: 1px solid #000;
+            border-bottom: 1px solid #000;
+            position: absolute;
+            right: 10px;
+            content: " ";
+            top: 17px;
+            transform: rotate(-45deg);
+            -webkit-transition: all 0.2s ease-in-out;
+            -moz-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .accordion .accordion_item_content {
+            font-size: 13px;
+            margin: 0 30px 0 30px;
+        }
+
+        .accordion .accordion_item_title.active:after {
+            transform: rotate(45deg);
+            -webkit-transition: all 0.2s ease-in-out;
+            -moz-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</form>

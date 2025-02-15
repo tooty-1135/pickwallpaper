@@ -1,0 +1,142 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            <div class="navbar-item">
+                <div class="dropdown is-hoverable">
+                    <div class="dropdown-trigger">
+                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <span>全部分類</span>
+                            <span class="icon is-small">
+                                <span class="material-symbols-outlined">expand_more</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <a href="#" class="dropdown-item">
+                                All
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-end">
+<!--            <div class="navbar-item">-->
+<!--                <div class="field has-addons">-->
+<!--                    <div class="control">-->
+<!--                        <input class="input" type="text" placeholder="搜尋壁紙">-->
+<!--                    </div>-->
+<!--                    <div class="control">-->
+<!--                        <a class="button is-info">-->
+<!--                            搜尋-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-light is-link" action_type="to_add_wallpaper" title="新增桌布">
+                        <span class="material-symbols-outlined">add</span>
+                    </a>
+                    <a class="button is-light is-link" action_type="refresh_wallpapers" title="重新整理">
+                        <span class="material-symbols-outlined">sync</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div id="wallpapers" class="columns is-multiline" style="padding: 30px;">
+</div>
+<style>
+    .empty-wallpapers {
+        display: flex;
+        gap: 10px;
+        font-size: 30px;
+    }
+
+    .wallpaper-card {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: ease-in-out 0.2s;
+        animation: 0.5s cubic-bezier(0, 1, .5, 1) 0s 1 slideInFromRight;
+    }
+
+    .wallpaper-card:hover {
+        background-color: rgba(128, 128, 128, 0.2);
+    }
+
+    .wallpaper-card:active {
+        background-color: rgba(128, 128, 128, 0.3);
+    }
+
+    .wallpaper-card > .wallpaper-card-image {
+        position: relative;
+        width: 100%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    .wallpaper-card > .wallpaper-card-image > .wallpaper-card-setting-bar {
+        cursor: default;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        width: 100%;
+        height: 40px;
+        bottom: 0;
+        padding: 5px;
+        opacity: 0;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.3);
+        transition: .3s;
+    }
+
+    .wallpaper-card:hover > .wallpaper-card-image > .wallpaper-card-setting-bar {
+        opacity: 1;
+    }
+
+    .wallpaper-card > .wallpaper-card-image > .wallpaper-card-setting-bar > span {
+        cursor: pointer;
+        transition: .3s;
+    }
+
+    .wallpaper-card > .wallpaper-card-image > .wallpaper-card-setting-bar > span:hover {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .wallpaper-card > .wallpaper-card-image > .wallpaper-card-setting-bar > span:active {
+        transform: scale(.8);
+    }
+
+    .wallpaper-card > .wallpaper-card-data {
+        margin: 12px 8% 0 8%;
+    }
+
+    .wallpaper-card > .wallpaper-card-data > .wallpaper-card-data-title {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .wallpaper-card > .wallpaper-card-data > .wallpaper-card-data-info {
+        display: flex;
+        gap: 10px;
+    }
+
+    .wallpaper-card > .wallpaper-card-data > .wallpaper-card-data-info > .wallpaper-card-data-type {
+        background: #00d1b2;
+        padding: 0 2px 0 2px;
+        border-radius: 5px;
+        opacity: .7;
+        transition: opacity .2s;
+    }
+
+    .wallpaper-card > .wallpaper-card-data > .wallpaper-card-data-info > .wallpaper-card-data-type:hover {
+        opacity: 1;
+    }
+
+</style>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title appname></title>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+</head>
+
+<body>
+<div id="main-area">
+    <div class="btn hover_color_down" id="open-main-window"><span class="material-symbols-outlined">web_asset</span>開啟視窗
+    </div>
+    <div class="btn hover_color_down" id="play-pause"><span class="material-symbols-outlined">play_pause</span>播放/暫停壁紙
+    </div>
+    <div class="btn hover_color_down" id="refresh"><span class="material-symbols-outlined">refresh</span>刷新主題</div>
+    <div class="btn hover_color_down" id="info"><span class="material-symbols-outlined">info</span>關於</div>
+    <div class="btn hover_color_red" id="leave"><span class="material-symbols-outlined">power_settings_new</span>離開
+    </div>
+    <style>
+        .material-symbols-outlined {
+            font-size: unset;
+        }
+
+        #main-area {
+            display: flex;
+            flex-direction: column;
+            grid-area: main-area;
+            width: 100%;
+            margin: 2px;
+            background-color: white;
+            border-radius: 3px;
+            box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            font-size: 16px;
+        }
+
+        #main-area > .btn {
+            padding: 10px;
+            width: 100%;
+            flex-grow: 1;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: center;
+            gap: 10px;
+            transition: ease-in-out 0.1s;
+        }
+
+        #main-area > .btn > .material-symbols-outlined {
+            width: 20px;
+            display: flex;
+            font-size: unset;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</div>
+</body>
+<style>
+    body {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        gap: 0 0;
+        margin: 0;
+        user-select: none;
+        overflow: hidden;
+        font-family: 'Microsoft JhengHei', '微軟正黑體', sans-serif;
+    }
+
+    .hover_color_down:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .hover_color_red:hover {
+        background-color: red;
+    }
+
+    *[disabled] {
+        cursor: not-allowed;
+    }
+
+    *[disabled]::after {
+        background-color: rgba(0, 0, 0, 0.5);
+        content: "暫不可用";
+    }
+</style>
+</html>
